@@ -1,0 +1,105 @@
+@font-face {
+    font-family: 'Raleway';
+    src: url('./assets/fonts/Raleway/Raleway-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('./assets/fonts/Raleway/Raleway-Italic-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    --bg-color: #071820;
+    --card-color: #0c2834;
+    --text-color: #F9F8FD;
+    --accent-color: rgba(2, 140, 220, 0.884);
+    --border-radius: 8px;
+}
+
+* {
+    font-family: "Raleway", sans-serif;
+    transition: all 0.2s ease-in-out;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 32px;
+}
+
+h1, h2 {
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 4px;
+    margin-top: 32px;
+}
+
+.input_area {
+    margin-bottom: 32px;
+    margin-left: 0;
+}
+
+#title_input, #note_input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    border: 1px solid var(--card-color);
+    border-radius: var(--border-radius);
+    background-color: var(--card-color);
+    color: var(--text-color);
+    font-size: 16px;
+}
+
+#title_input:focus, #note_input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 1px var(--accent-color);
+}
+
+.input_area button {
+    padding: 10px 20px;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.input-area button:hover {
+    filter: brightness(0.9);
+}
+
+.content {
+    display: flex;
+}
+
+.archive_content {
+    display: flex;
+}
+
+.trash_content {
+    display: flex;
+}
+
+.notebox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px;
+}
+
+.inputbox {
+    padding: 16px;
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
