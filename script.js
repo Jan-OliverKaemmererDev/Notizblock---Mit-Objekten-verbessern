@@ -1,42 +1,39 @@
-// notizen erstellen und anzeigen lassen
-// 1. Ich brauche Notizen.
-let notesTitles = []; // Titel der Notizen
-let notes = []; // Notizen
+let notesTitles = [];
+let notes = [];
 
-// Archiv für archivierte Notizen
-let archiveNotesTitles = []; // Titel der archivierten Notizen
-let archiveNotes = []; // Archivierte Notizen
+let archiveNotesTitles = [];
+let archiveNotes = [];
 
-// Papierkorb für gelöschte Notizen
-let trashNotesTitles = []; // Titel der gelöschten Notizen
-let trashNotes = []; // Gelöschte Notizen
+let trashNotesTitles = [];
+let trashNotes = [];
+// Der Notizblock hat hier oben eine komplizierte Array Struktur. Und diese wollen wir zusammenfassen.
+// Für die Objekt Aufgabe:
+// Ich mache ein Objekt, wo die Array Namen die keys sind und ihre arrays stehen dahinter als values.
+let allNotes = {
+    'notesTitles': [],
+    'notes': [],
+    'archiveNotesTitles': [],
+    'archiveNotes': [],
+    'trashNotesTitles': [],
+    'trashNotes': []
+};
+
 
 function renderNotesTitles() {
     let contentRef = document.getElementById('content');
     contentRef.innerHTML = "";
 
-    for (let indexNotesTitels = 0; indexNotesTitels < notesTitles.length; indexNotesTitels++) {
+    for (let indexNotesTitels = 0; indexNotesTitels < allNotes.notesTitles.length; indexNotesTitels++) {
         contentRef.innerHTML += getNoteTamplate(indexNotesTitels);
     }
 }
 
-// 2. Wann werden sie angezeigt?
-function renderNotes() { // WANN? renderNotes() wird am Anfang mit onload im body-Tag aufgerufen.
-// 3. Ich muss definieren, wo sie anzuzeigen sind.
-// In dem Fall gebe ich der id content eine Variable namens contentRef.
-let contentRef = document.getElementById('content'); // WO? sie werden im div mit der id "content" angezeigt.
-// Der Inhalt des divs mit der id "content" wird geleert, damit nicht immer wieder die alten Notizen dazustehen.
+function renderNotes() {
+let contentRef = document.getElementById('content');
 contentRef.innerHTML = ""; 
 
-// For-loop:
-// Es startet bei indexNote = 0
-// Solange indexNote kleiner ist als die Länge des arrays notes, wird der loop ausgeführt
-// indexNote wird bei jedem Durchlauf mit indexNote++ um 1 erhöht
-for (let indexNote = 0; indexNote < notes.length; indexNote++) {
-    // Der Inhalt des divs mit der id "content" wird um den Wert der Variable note erweitert
-    // Dazu wird die Funktion getNoteTemplate aufgerufen, der die Variable note übergeben wird.
+for (let indexNote = 0; indexNote < allNotes.notes.length; indexNote++) {
     contentRef.innerHTML += getNoteTamplate(indexNote);
-// Notizen im localStorage speichern
 }
 
 renderTrashNotesTitles();
@@ -48,7 +45,7 @@ renderArchiveNotes();
 function renderArchiveNotesTitles() {
     let archiveContentRef = document.getElementById('archive_content');
     archiveContentRef.innerHTML = "";
-    for (let indexArchiveNotesTitels = 0; indexArchiveNotesTitels < archiveNotesTitles.length; indexArchiveNotesTitels++) {
+    for (let indexArchiveNotesTitels = 0; indexArchiveNotesTitels < allNotes.archiveNotesTitles.length; indexArchiveNotesTitels++) {
         archiveContentRef.innerHTML += getArchiveNoteTemplate(indexArchiveNotesTitels);
     }
 }
@@ -56,74 +53,52 @@ function renderArchiveNotesTitles() {
 function renderArchiveNotes() {
     let archiveContentRef = document.getElementById('archive_content'); 
     archiveContentRef.innerHTML = "";
-    for (let indexArchiveNote = 0; indexArchiveNote < archiveNotes.length; indexArchiveNote++) {
+    for (let indexArchiveNote = 0; indexArchiveNote < allNotes.archiveNotes.length; indexArchiveNote++) {
         archiveContentRef.innerHTML += getArchiveNoteTemplate(indexArchiveNote);
     }
 }
 
-// Papierkorb Bereich
-// Funktion zum Rendern der Titel der gelöschten Notizen im Papierkorb
 function renderTrashNotesTitles() {
     let trashContentRef = document.getElementById('trash_content');
     trashContentRef.innerHTML = "";
 
-    for (let indexTrashNotesTitels = 0; indexTrashNotesTitels < trashNotesTitles.length; indexTrashNotesTitels++) {
+    for (let indexTrashNotesTitels = 0; indexTrashNotesTitels < allNotes.trashNotesTitles.length; indexTrashNotesTitels++) {
         trashContentRef.innerHTML += getTrashNoteTemplate(indexTrashNotesTitels);
     }
 }
 
-
-// Funktion zum Rendern der gelöschten Notizen im Papierkorb
 function renderTrashNotes() {
-    let trashContentRef = document.getElementById('trash_content'); // Referenz zum div mit der id "trash_content"
-    // Den Inhalt des divs mit der id "trash_content" leeren
+    let trashContentRef = document.getElementById('trash_content');
     trashContentRef.innerHTML = "";
 
-    for (let indexTrashNote = 0; indexTrashNote < trashNotes.length; indexTrashNote++) {
+    for (let indexTrashNote = 0; indexTrashNote < allNotes.trashNotes.length; indexTrashNote++) {
         trashContentRef.innerHTML += getTrashNoteTemplate(indexTrashNote);
     }
 }
 
-
-
-
-// 5. notizen hinzufügen
-// Eingabe vom User definieren:
-// Funktion addNote wird aufgerufen, wenn der User auf den Button "Notiz speichern" klickt.
 function addNote() {
-    let titleInputRef = document.getElementById('title_input'); // Die Variable titleInputRef bekommt das Input-Feld mit der id "title_input"
-    // Eingabe auslesen:
-    let titleInput = titleInputRef.value.trim(); // Die Variable titleInput bekommt den Wert des Input-Felds durch .value. trim() entfernt Leerzeichen am Anfang und Ende der Eingabe.
-    
-    let noteInputRef = document.getElementById('note_input'); // Die Variable noteInputRef bekommt das Input-Feld mit der id "note_input"
-    
-    // Eingabe auslesen:
-    let noteInput = noteInputRef.value.trim(); // Die Variable noteInput bekommt den Wert des Input-Felds durch .value
-    // Referenzen zu den HTML-Elementen und das was man dann damit maccht, sollte man voneinander trennen.
+    let titleInputRef = document.getElementById('title_input');
+    let titleInput = titleInputRef.value.trim();
+    let noteInputRef = document.getElementById('note_input'); 
+    let noteInput = noteInputRef.value.trim();
 
-    // Überprüfung: Sind Titel oder Notiz leer?
     if (titleInput === "" || noteInput === "") {
         alert("Bitte füllen Sie sowohl den Titel als auch das Notizfeld aus.");
-        return; // Die Funktion wird hier abgebrochen, wenn Felder leer sind
+        return;
     }
     
-    notesTitles.push(titleInput); // Die Eingabe wird dem Array notesTitles hinzugefügt.
-    // Eingabe speichern (den array notes hinzufügen):
-    notes.push(noteInput); // Die Eingabe wird dem Array notes hinzugefügt.
+    notesTitles.push(titleInput);
+    notes.push(noteInput);
 
-    titleInputRef.value = ""; // Das Input-Feld des Titels wird geleert, damit der User einen neuen Titel eingeben kann.
-    noteInputRef.value = ""; // Das Input-Feld wird geleert, damit der User eine neue Notiz eingeben kann.
+    titleInputRef.value = "";
+    noteInputRef.value = "";
 
-    // Eingabe anzeigen lassen:
-    renderNotesTitles(); // Die Funktion renderNotesTitles() wird aufgerufen, damit der Titel der neuen Notiz angezeigt wird.
-    renderNotes(); // Die Funktion renderNotes() wird aufgerufen, damit die neue Notiz angezeigt wird.
+    renderNotesTitles();
+    renderNotes();
 
     saveToLocalStorage();
-    // Notizen im localStorage speichern
 }
 
-// Daten im localStorage speichern:
-// Die arrays notesTitles und notes im localStorage speichern
 function saveToLocalStorage() {
     localStorage.setItem("notesTitles", JSON.stringify(notesTitles));
     localStorage.setItem("notes", JSON.stringify(notes));
@@ -133,7 +108,6 @@ function saveToLocalStorage() {
     localStorage.setItem("trashNotes", JSON.stringify(trashNotes));
 }
 
-// Daten aus dem localStorage holen:
 function getFromLocalStorage() {
     let storedTitles = JSON.parse(localStorage.getItem("notesTitles"));
     let storedNotes = JSON.parse(localStorage.getItem("notes"));
@@ -154,17 +128,17 @@ function getFromLocalStorage() {
         trashNotes = storedTrashNotes;
     }
 }
-// Daten aus dem localStorage holen, wenn die Seite geladen wird
+
 getFromLocalStorage();
 
 function pushToArchiveNote(indexNote) {
-    let archiveNote = notes.splice(indexNote, 1); // Ich splice die Notiz aus dem array notes und speichere sie in der Variable archiveNote.
-    archiveNotes.push(archiveNote[0]); // Die archivierte Notiz wird dem array archiveNotes hinzugefügt.
+    let archiveNote = notes.splice(indexNote, 1);
+    archiveNotes.push(archiveNote[0]);
     let archiveNoteTitle = notesTitles.splice(indexNote, 1);
-    archiveNotesTitles.push(archiveNoteTitle[0]); // Die archivierte Notiz wird dem array archiveNotesTitels hinzugefügt.
-    renderNotes(); // Die Funktion renderNotes() wird aufgerufen, damit die archivierte Notiz nicht mehr angezeigt wird.
-    renderArchiveNotes(); // Die Funktion renderArchiveNotes() wird aufgerufen, damit die archivierte Notiz im Archiv angezeigt wird.
-    saveToLocalStorage(); // Notizen im localStorage speichern
+    archiveNotesTitles.push(archiveNoteTitle[0]);
+    renderNotes();
+    renderArchiveNotes();
+    saveToLocalStorage();
 }
 
 function pushFromArchiveToNote(indexArchiveNote) {
