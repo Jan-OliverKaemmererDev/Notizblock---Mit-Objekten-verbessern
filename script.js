@@ -123,57 +123,50 @@ function pushToArchiveNote(indexNote) {
 }
 
 function pushFromArchiveToNote(indexArchiveNote) {
-    let note = allNotes.archiveNotes.splice(indexArchiveNote, 1); // Ich splice die Notiz aus dem array archiveNotes und speichere sie in der Variable note.
-    allNotes.notes.push(note[0]); // Die wiederhergestellte Notiz wird dem array notes hinzugefügt.
+    let note = allNotes.archiveNotes.splice(indexArchiveNote, 1);
+    allNotes.notes.push(note[0]);
     let noteTitle = allNotes.archiveNotesTitles.splice(indexArchiveNote, 1);
-    allNotes.notesTitles.push(noteTitle[0]); // Die wiederhergestellte Notiz wird dem array notesTitels hinzugefügt.
-    renderArchiveNotes(); // Die Funktion renderArchiveNotes() wird aufgerufen, damit die wiederhergestellte Notiz nicht mehr im Archiv angezeigt wird.
-    renderNotes(); // Die Funktion renderNotes() wird aufgerufen, damit die wiederhergestellte Notiz im Notizbereich angezeigt wird.
-    saveToLocalStorage(); // Notizen im localStorage speichern
+    allNotes.notesTitles.push(noteTitle[0]);
+    renderArchiveNotes();
+    renderNotes();
+    saveToLocalStorage();
 }
 
 function pushFromArchiveToTrash(indexArchiveNote) {
-    let trashNote = allNotes.archiveNotes.splice(indexArchiveNote, 1); // Ich splice die Notiz aus dem array archiveNotes und speichere sie in der Variable trashNote.
-    allNotes.trashNotes.push(trashNote[0]); // Die gelöschte Notiz wird dem array trashNotes hinzugefügt.
+    let trashNote = allNotes.archiveNotes.splice(indexArchiveNote, 1);
+    allNotes.trashNotes.push(trashNote[0]);
     let trashNoteTitle = allNotes.archiveNotesTitles.splice(indexArchiveNote, 1);
-    allNotes.trashNotesTitles.push(trashNoteTitle[0]); // Die gelöschte Notiz wird dem array trashNotesTitels hinzugefügt.
-    renderArchiveNotes(); // Die Funktion renderArchiveNotes() wird aufgerufen, damit die gelöschte Notiz nicht mehr im Archiv angezeigt wird.
-    renderTrashNotes(); // Die Funktion renderTrashNotes() wird aufgerufen, damit die gelöschte Notiz im Papierkorb angezeigt wird.
-    saveToLocalStorage(); // Notizen im localStorage speichern
+    allNotes.trashNotesTitles.push(trashNoteTitle[0]);
+    renderArchiveNotes();
+    renderTrashNotes();
+    saveToLocalStorage();
 }
 
-// 6. notizen löschen
-// Funktion deleteNote wird aufgerufen, wenn der User eine Notiz löschen möchte.
-// Der Funktion wird der Index der zu löschenden Notiz übergeben.
 function pushToTrash(indexNote) {
-    // Notiz aus dem array notes mit splice löschen:
-    // splice(index, anzahl der zu löschenden einträge)
-    let trashNote = allNotes.notes.splice(indexNote, 1); // Ich splice die Notiz aus dem array notes und speichere sie in der Variable trashNote.
-    allNotes.trashNotes.push(trashNote[0]); // Die gelöschte Notiz wird dem array trashNotes hinzugefügt.
+    let trashNote = allNotes.notes.splice(indexNote, 1);
+    allNotes.trashNotes.push(trashNote[0]);
     let trashNoteTitle = allNotes.notesTitles.splice(indexNote, 1);
-    allNotes.trashNotesTitles.push(trashNoteTitle[0]); // Die gelöschte Notiz wird dem array trashNotesTitels hinzugefügt.
+    allNotes.trashNotesTitles.push(trashNoteTitle[0]);
 
-    // Eingabe anzeigen lassen:
-    renderNotes(); // Die Funktion renderNotes() wird aufgerufen, damit die gelöschte Notiz nicht mehr angezeigt wird.
-    renderTrashNotes(); // Die Funktion renderTrashNotes() wird aufgerufen, damit die gelöschte Notiz im Papierkorb angezeigt wird.
-    saveToLocalStorage(); // Notizen im localStorage speichern
+    renderNotes();
+    renderTrashNotes();
+    saveToLocalStorage();
 }
 
 function pushFromTrashToNote(indexTrashNote) {
-    let note = allNotes.trashNotes.splice(indexTrashNote, 1); // Ich splice die Notiz aus dem array trashNotes und speichere sie in der Variable note.
-    allNotes.notes.push(note[0]); // Die wiederhergestellte Notiz wird dem array notes hinzugefügt.
+    let note = allNotes.trashNotes.splice(indexTrashNote, 1);
+    allNotes.notes.push(note[0]);
     let noteTitle = allNotes.trashNotesTitles.splice(indexTrashNote, 1);
-    allNotes.notesTitles.push(noteTitle[0]); // Die wiederhergestellte Notiz wird dem array notesTitels hinzugefügt.
-    renderTrashNotes(); // Die Funktion renderTrashNotes() wird aufgerufen, damit die wiederhergestellte Notiz nicht mehr im Papierkorb angezeigt wird.
-    renderNotes(); // Die Funktion renderNotes() wird aufgerufen, damit die wiederhergestellte Notiz im Notizbereich angezeigt wird.
-    saveToLocalStorage(); // Notizen im localStorage speichern
+    allNotes.notesTitles.push(noteTitle[0]);
+    renderTrashNotes();
+    renderNotes();
+    saveToLocalStorage();
 }
 
-// Notiz endgültig löschen
 function deleteTrashNote(indexTrashNote) {
-    allNotes.trashNotesTitles.splice(indexTrashNote, 1); // Ich splice den Titel der Notiz aus dem array trashNotesTitles.
-    allNotes.trashNotes.splice(indexTrashNote, 1); // Ich splice die Notiz aus dem array trashNotes.
-    renderTrashNotes(); // Die Funktion renderTrashNotes() wird aufgerufen, damit die Notiz nicht mehr im Papierkorb angezeigt wird.
-    renderTrashNotesTitles(); // Die Funktion renderTrashNotesTitles() wird aufgerufen, damit der Titel der Notiz nicht mehr im Papierkorb angezeigt wird.
-    saveToLocalStorage(); // Notizen im localStorage speichern
+    allNotes.trashNotesTitles.splice(indexTrashNote, 1);
+    allNotes.trashNotes.splice(indexTrashNote, 1);
+    renderTrashNotes();
+    renderTrashNotesTitles();
+    saveToLocalStorage();
 }
