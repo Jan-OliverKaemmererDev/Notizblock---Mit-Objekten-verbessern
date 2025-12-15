@@ -1,10 +1,4 @@
-// 4. Wie werden sie angezeigt?
-// Die Funktion getNoteTemplate bekommt eine Variable note übergeben und gibt einen HTML-String zurück.
 function getNoteTamplate(indexNote) {
-    // Der HTML-String wird zurückgegeben:
-    // Der Wert der Notiz wird aus dem array notes mit dem übergebenen indexNote ausgelesen.
-    // Ein button mit onclick wurde hinzugefügt, der die Funktion pushToTrash mit dem index der Notiz aufruft.
-    // Beim Klicken auf den Button wird die entsprechende Notiz gelöscht.
     return `
     <div class="note">
         <h3>${allNotes.notesTitles[indexNote]}</h3>
@@ -30,7 +24,6 @@ function getArchiveNoteTemplate(indexArchiveNote) {
     `;
 }
 
-// Funktion zum Generieren des HTML-Strings für eine gelöschte Notiz im Papierkorb
 function getTrashNoteTemplate(indexTrashNote) {
     return `
     <div class="note">
